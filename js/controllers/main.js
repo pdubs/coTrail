@@ -1,5 +1,5 @@
 angular.module('checkinController', [])
-	.controller('mainController', ['$scope','$http','Checkins', 'uiGmapGoogleMapApi', function($scope, $http, Checkins, uiGmapGoogleMapApi) {
+	.controller('mainController', ['$scope','$http','Checkins','Traildata','uiGmapGoogleMapApi', function($scope, $http, Checkins, Traildata, uiGmapGoogleMapApi) {
 		$scope.checkinData = {};
 		$scope.loading = true;
 
@@ -31,17 +31,25 @@ angular.module('checkinController', [])
 				}
 
 			    uiGmapGoogleMapApi.then(function(maps) {
-					$scope.map = { center: { latitude: $scope.checkins[0].lat, longitude: $scope.checkins[0].lon }, zoom: 8 };
+					Traildata.get()
+						.success(function(trailData) {
+							$scope.trailData = trailData;
 
-					$scope.checkinMarkers = [];
+							console.log($scope.trailData);
 
-					var markers = [];
-					for (var i = 0; i < $scope.checkins.length; i++) {
-						markers.push(createCheckinMarker(i));
-					}
-					$scope.checkinMarkers = markers;
+							$scope.map = { center: { latitude: $scope.checkins[0].lat, longitude: $scope.checkins[0].lon }, zoom: 8 };
+
+							$scope.checkinMarkers = [];
+
+							var markers = [];
+							for (var i = 0; i < $scope.checkins.length; i++) {
+								markers.push(createCheckinMarker(i));
+							}
+
+							$scope.checkinMarkers = markers;
 
 
+						});
 			    });
 			});
 

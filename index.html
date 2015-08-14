@@ -1,16 +1,10 @@
 <!doctype html>
-
-<!-- ASSIGN OUR ANGULAR MODULE -->
 <html ng-app="checkIn">
 <head>
-	<!-- META -->
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
-
-	<title>JayDude's CO Trail Trip</title>
-
-	<!-- SCROLLS -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>JayDude's Big Adventure Map</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<style>
 		html 					{ overflow-y:scroll; }
@@ -22,14 +16,14 @@
 		}
 	</style>
 
-	<!-- SPELLS -->
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 	<script src="js/lodash.min.js"></script>
 	<script src="js/angular-google-maps.min.js"></script>
 
-	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
-	<script src="js/services/checkins.js"></script> <!-- load our checkin service -->
-	<script src="js/core.js"></script> <!-- load our main application -->
+	<script src="js/controllers/main.js"></script>
+	<script src="js/services/checkins.js"></script>
+	<script src="js/services/traildata.js"></script>
+	<script src="js/core.js"></script>
 
 </head>
 <body ng-controller="mainController">
