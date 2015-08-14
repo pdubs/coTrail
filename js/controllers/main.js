@@ -1,5 +1,5 @@
 angular.module('checkinController', [])
-	.controller('mainController', ['$scope','$http','Checkins','Traildata','uiGmapGoogleMapApi', function($scope, $http, Checkins, Traildata, uiGmapGoogleMapApi) {
+	.controller('mainController', ['$scope','$http','Checkins','Traildata','uiGmapGoogleMapApi','uiGmapIsReady', function($scope, $http, Checkins, Traildata, uiGmapGoogleMapApi, uiGmapIsReady) {
 		$scope.checkinData = {};
 		$scope.loading = true;
 
@@ -10,7 +10,7 @@ angular.module('checkinController', [])
 		Checkins.get()
 			.success(function(data) {
 				$scope.checkins = data;
-				$scope.loading = false;
+
 
 				var createCheckinMarker = function(i, idKey) {
 					if (idKey == null) {
@@ -35,9 +35,26 @@ angular.module('checkinController', [])
 						.success(function(trailData) {
 							$scope.trailData = trailData;
 
-							console.log($scope.trailData);
+							$scope.polylines = [
+							    {
+							        id: 1,
+							        path: $scope.trailData.features[0].geometry,
+							        stroke: {
+							            color: '#6060FB',
+							            weight: 3
+							        },
+							        editable: false,
+							        draggable: false,
+							        geodesic: true,
+							        visible: true
+							    }
+							];
 
-							$scope.map = { center: { latitude: $scope.checkins[0].lat, longitude: $scope.checkins[0].lon }, zoom: 8 };
+							$scope.map = {
+								center: { latitude: $scope.checkins[0].lat, longitude: $scope.checkins[0].lon },
+								zoom: 8,
+								options: $scope.MapOptions
+							};
 
 							$scope.checkinMarkers = [];
 
@@ -48,10 +65,67 @@ angular.module('checkinController', [])
 
 							$scope.checkinMarkers = markers;
 
+//							$scope.addMarkerClickFunction($scope.checkinMarkers);
+
+							$scope.loading = false;
+
 
 						});
 			    });
 			});
 
+		$scope.windowOptions = {
+		    show: true
+		};
+/*
+		$scope.onClick = function (data) {
+		    $scope.windowOptions.show = !$scope.windowOptions.show;
+		    console.log('$scope.windowOptions.show: ', $scope.windowOptions.show);
+		    console.log('This is a ' + data);
+		};
+
+		$scope.closeClick = function () {
+		    $scope.windowOptions.show = false;
+		};
+
+		$scope.title = "Window Title!";
+
+		$scope.addMarkerClickFunction = function (markersArray) {
+		    angular.forEach(markersArray, function (value, key) {
+		        value.onClick = function () {
+		            $scope.onClick(value.data);
+		            $scope.MapOptions.markers.selected = value;
+		        };
+		    });
+		};
+*/
+
+		$scope.MapOptions = {
+		    minZoom: 3,
+		    zoomControl: false,
+		    draggable: true,
+		    navigationControl: false,
+		    mapTypeControl: false,
+		    scaleControl: false,
+		    streetViewControl: false,
+		    disableDoubleClickZoom: false,
+		    keyboardShortcuts: true,
+		    markers: {
+		        selected: {}
+		    },
+		    styles: [{
+		        featureType: "poi",
+		        elementType: "labels",
+		        stylers: [{
+		            visibility: "off"
+		        }]
+		    }, {
+		        featureType: "transit",
+		        elementType: "all",
+		        stylers: [{
+		            visibility: "off"
+		        }]
+		    }],
+		};
 
 	}]);
