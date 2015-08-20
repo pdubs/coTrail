@@ -19,7 +19,6 @@ html, body, #map_canvas {
 .marker-labels {
 	color: white;
 	background-color: black;
-	opacity: 0.5;
 }
 
 .instagram {

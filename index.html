@@ -6,7 +6,8 @@
 	<title>JayDude CT Map</title>
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="shortcut icon" href="favicon.ico" />
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
 	<script src="js/lodash.min.js"></script>
 	<script src="js/angular-google-maps.min.js"></script>
 
@@ -17,19 +18,23 @@
 	<script src="js/core.js"></script>
 </head>
 <body ng-controller="mainController">
-	<div ng-if="map.isReady">
-		<ui-gmap-google-map center='map.center' zoom='map.zoom' options="map.options">
+	<ui-gmap-google-map center='map.center' zoom='map.zoom' options="map.options">
 
-			<ui-gmap-polyline ng-repeat="p in polylines" path="p.path" stroke="p.stroke" static="true"></ui-gmap-polyline>
+		<ui-gmap-polyline ng-repeat="p in polylines" path="p.path" stroke="p.stroke" static="true"></ui-gmap-polyline>
 
-			<ui-gmap-markers models="checkinMarkers" idkey="checkinMarkers.id" coords="'self'" icon="'icon'" modelsbyref="true" events="map.markersEvents">
-				<ui-gmap-windows show="'showWindow'" ng-cloak>
-					<blockquote><p class="checkin-note" ng-non-bindable>{{ note }}</p></blockquote>
-				</ui-gmap-windows>	
-			</ui-gmap-markers>
+		<ui-gmap-markers models="checkinMarkers" idkey="checkinMarkers.id" coords="'self'" icon="'icon'" modelsbyref="true" events="map.markersEvents">
+			<ui-gmap-windows show="'showWindow'" ng-cloak>
+				<blockquote><p class="checkin-note" ng-non-bindable>{{ note }}</p></blockquote>
+			</ui-gmap-windows>
+		</ui-gmap-markers>
 
-		</ui-gmap-google-map>
-	</div>
+		<ui-gmap-markers models="photoMarkers" idkey="photoMarkers.id" coords="'self'" icon="'icon'" modelsbyref="true" events="map.markersEvents">
+			<ui-gmap-windows show="'showWindow'" ng-cloak>
+				<img ng-src="{{ photoMarkers.img }}">
+			</ui-gmap-windows>	
+		</ui-gmap-markers>
+
+	</ui-gmap-google-map>
 	<div class="instagram"><a target="_blank" href="https://instagram.com/moyesjay/"><img src="img/Instagram_Icon_Large.png"/></a><div>
 </body>
 </html>
